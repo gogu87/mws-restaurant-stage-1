@@ -4,12 +4,20 @@ let restaurants,
 var map
 var markers = []
 
+let registerServiceWorker = () => {
+  if(navigator.serviceWorker) {
+    navigator.serviceWorker
+      .register('/js/sw.js')
+      .catch(err => console.log(err));
+  }
+};
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
   fetchCuisines();
+registerServiceWorker();						  
 });
 
 /**
@@ -80,6 +88,10 @@ window.initMap = () => {
     center: loc,
     scrollwheel: false
   });
+	 self.listener = google.maps.event.addListener(map, 'tilesloaded', () => {
+    $('#map').find('*').attr('tabindex', '-1');
+    google.maps.event.removeListener(self.listener);
+  }); 
   updateRestaurants();
 }
 
@@ -140,6 +152,7 @@ createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
+  image.setAttribute('alt', '""');
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   li.append(image);
 
