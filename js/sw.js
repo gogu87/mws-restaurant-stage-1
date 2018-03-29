@@ -20,7 +20,7 @@ const CACHE_FILES = [
   '../img/10.jpg'
 ];
 
-sself.addEventListener('install', e => {
+self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
