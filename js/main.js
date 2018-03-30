@@ -7,7 +7,7 @@ var markers = []
 let registerServiceWorker = () => {
   if(navigator.serviceWorker) {
     navigator.serviceWorker
-      .register('/js/sw.js')
+      .register('/sw.js')
       .catch(err => console.log(err));
   }
 };
@@ -152,7 +152,7 @@ createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.setAttribute('alt', '"'+restaurant.name+'"');
+  image.setAttribute('alt', '"'+restaurant.name+` restaurant's photo"`);
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   li.append(image);
 
